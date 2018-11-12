@@ -3,11 +3,11 @@
   <title>时光收藏</title>
   
   
-  <link href="/blog/atom.xml" rel="self"/>
+  <link href="/atom.xml" rel="self"/>
   
-  <link href="https://hitime-wiki.github.io/blog/"/>
+  <link href="http://blog.hitime.wiki/"/>
   <updated>2018-11-12T14:26:02.000Z</updated>
-  <id>https://hitime-wiki.github.io/blog/</id>
+  <id>http://blog.hitime.wiki/</id>
   
   <author>
     <name>zhangdp</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="https://hitime-wiki.github.io/blog/2018/11/12/hello-world/"/>
-    <id>https://hitime-wiki.github.io/blog/2018/11/12/hello-world/</id>
+    <link href="http://blog.hitime.wiki/2018/11/12/hello-world/"/>
+    <id>http://blog.hitime.wiki/2018/11/12/hello-world/</id>
     <published>2018-11-12T14:26:02.000Z</published>
     <updated>2018-11-12T14:26:02.000Z</updated>
     
