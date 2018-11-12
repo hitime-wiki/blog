@@ -44,5 +44,5 @@ branches:
     - dev
 env:
  global:
-   - GH_REF: https://github.com/hitime-wiki/blog.git
+   - GH_REF: github.com/hitime-wiki/blog.git
 
