@@ -28,14 +28,15 @@ before_script:
 
 script:
   - hexo clean && hexo g
+  - hexo d
 
 
 after_success:
  # - LAST_BUILD_NUMBER=68
  # - for i in $(seq 1 $LAST_BUILD_NUMBER ); do  travis logs $i --delete --force ; done
 
-after_script:
-  - ./_travis.sh
+#after_script:
+#  - ./_travis.sh
 
 # E: Build LifeCycle
 
