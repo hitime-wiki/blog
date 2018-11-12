@@ -29,7 +29,9 @@ function default(){
 
   mv .deploy_git/.git/ ./public/
   cd ./public
-
+cat <<EOF >> CNAME
+blog.hitime.wiki
+EOF
 cat <<EOF >> README.md
 部署状态 | 集成结果 | 参考值
 ---|---|---
