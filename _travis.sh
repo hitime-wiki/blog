@@ -21,30 +21,6 @@ function failure(){
 #默认执行
 function default(){
 
-  git clone https://${GH_REF} .deploy_git
-  cd .deploy_git
-
-  git checkout master
-  cd ../
-
-  mv .deploy_git/.git/ ./public/
-  cd ./public
-cat <<EOF >> CNAME
-blog.hitime.wiki
-EOF
-cat <<EOF >> README.md
-部署状态 | 集成结果 | 参考值
----|---|---
-完成时间 | $time | yyyy-mm-dd hh:mm:ss
-部署环境 | $TRAVIS_OS_NAME + $TRAVIS_NODE_VERSION | window \| linux + stable
-部署类型 | $TRAVIS_EVENT_TYPE | push \| pull_request \| api \| cron
-启用Sudo | $TRAVIS_SUDO | false \| true
-仓库地址 | $TRAVIS_REPO_SLUG | owner_name/repo_name
-提交分支 | $TRAVIS_COMMIT | hash 16位
-提交信息 | $TRAVIS_COMMIT_MESSAGE |
-Job ID   | $TRAVIS_JOB_ID |
-Job NUM  | $TRAVIS_JOB_NUMBER |
-EOF
 
   git init
   git config user.name "zhangdp"

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.hitime.wiki/"/>
-  <updated>2018-11-12T16:10:03.000Z</updated>
+  <updated>2018-11-17T10:34:47.000Z</updated>
   <id>https://blog.hitime.wiki/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="https://blog.hitime.wiki/2018/11/17/Git%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/"/>
+    <id>https://blog.hitime.wiki/2018/11/17/Git分支管理/</id>
+    <published>2018-11-17T10:34:47.000Z</published>
+    <updated>2018-11-17T10:34:47.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Git分支功能十分强大，管理方案也多种多样，对于不同的团队规模及开发方式会有不同的分支管理方案。对于我们团队我设想的分支管理方案会结合Sprint的管理方式进行设计，总体思路按照功能分支+测试环境分支方式进行管理，详细管理方式如下：</p><h2 id="阶段一：Sprint开始，工期确认及功能分支创建"><a href="#阶段一：Sprint开始，工期确认及功能分支创建" class="headerlink" title="阶段一：Sprint开始，工期确认及功能分支创建"></a>阶段一：Sprint开始，工期确认及功能分支创建</h2><p>Sprint敲定，任务及工期认领完毕，确定对应系统从master创建功能分支。功能分支命名方式：</p><blockquote><p>命名规则：<em>feature/\${Sprint截止日期}/\${功能名称}</em><br>命名示例：<em>feature/20181018/mortgageUpdate</em></p></blockquote><p>对于当前阶段，Sprint截止日期默认为功能上线日期，在开发过程中同一功能开发人员将开发完毕的功能Push到当前功能分支。</p><h2 id="阶段二：开发联调阶段"><a href="#阶段二：开发联调阶段" class="headerlink" title="阶段二：开发联调阶段"></a>阶段二：开发联调阶段</h2><p>如果功能涉及到多方联调可以选择使用Profile为local的配置文件对接对应系统的开发环境进行本地联调也可以将功能分支发布到开发环境进行开发环境联调。<br>开发环境分支默认名称为dev，开发人员将对应功能分支合并到开发分支并完成相关配置可以进行开发联调。</p><h2 id="阶段三：功能提测，合并到测试分支"><a href="#阶段三：功能提测，合并到测试分支" class="headerlink" title="阶段三：功能提测，合并到测试分支"></a>阶段三：功能提测，合并到测试分支</h2><p>测试分支命名规则和开发分支不太相同，为了能够将不同阶段的Sprint功能不冲突的提测，测试环境分为两套环境并且可以选择发布对应分支。</p><blockquote><p>命名规则：<em>test/${Sprint截止日期}</em><br>命名示例：<em>test/20181018</em></p></blockquote><p>需要注意的是，在测试阶段的分支不再带功能名称，因为此刻同一Sprint阶段的不同功能会汇集到此测试分支进行全覆盖测试。QA已经提供两套测试环境可以并行两个Sprint版本开发及测试。<br>另外需要注意的是测试分支从功能分支直接合并而来不再经过dev分支。</p><h2 id="阶段四：Sprint结束，功能上线"><a href="#阶段四：Sprint结束，功能上线" class="headerlink" title="阶段四：Sprint结束，功能上线"></a>阶段四：Sprint结束，功能上线</h2><p>功能上线前，将Sprint对应的测试分支合并到master上，一旦出现冲突使用<strong>git merge —abort</strong>终止合并以保证master分支干净然后将master分支合并到当前测试分支并解决冲突后再合并到master。<br>合并完成后给master打上tag方便下次发布错误后使用该tag进行回滚，添加tag命令：<strong>git tag -a v1.4 -m ’my version 1.4‘</strong></p><h2 id="异常情况：线上出现问题使用热修复分支"><a href="#异常情况：线上出现问题使用热修复分支" class="headerlink" title="异常情况：线上出现问题使用热修复分支"></a>异常情况：线上出现问题使用热修复分支</h2><p>线上功能出现问题需要紧急修复，此时从master迁出热修复分支，命名方式如下：</p><blockquote><p>命名规则：<em>${修复日期}_hotfix</em><br>命名示例：<em>20181018_hotfix</em></p></blockquote><p>该分支为热修复分支为了尽快修复线上问题经过验证后不需要再合并到测试分支直接合并到master分支做紧急发布。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Git分支功能十分强大，管理方案也多种多样，对于不同的团队规模及开发方式会有不同的分支管理方案。对于我们团队我设想的分支管理方案会结合Sprint的管理方式进行设计，总体思路按照功能分支+测试环境分支方式进行管理，详细管理方式如下：&lt;/p&gt;
+&lt;h2 id=&quot;阶段一：Spri
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title></title>
