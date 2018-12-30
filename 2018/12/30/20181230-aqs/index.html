@@ -1,0 +1,364 @@
+<!DOCTYPE HTML>
+<html lang="null">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="时光收藏">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="https://blog.hitime.wiki">
+    <!--SEO-->
+
+
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>Java AQS[翻译] | 时光收藏</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="时光收藏" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header" style="background-image:url(http://snippet.shenliyang.com/img/banner.jpg)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="zhangdp">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://blog.hitime.wiki">时光收藏</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>Home</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/工具/"><i class="fa "></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Java AQS[翻译]">
+            
+	            Java AQS[翻译]
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/ ">
+             
+        </a>
+    </span>
+    
+
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/AQS" title="AQS">
+                        AQS
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2018/12/30</span>
+        </span>
+        
+    
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h3 id="AbstractQueuedSynchronizer类"><a href="#AbstractQueuedSynchronizer类" class="headerlink" title="AbstractQueuedSynchronizer类"></a>AbstractQueuedSynchronizer类</h3><blockquote>
+<p>It provides a framework for implementing blocking locks and related synchronizers like semaphores,  CountDownLatch etc. The basic algorithm for acquire is try acquire, if successful return else enqueue thread if it is not already queued and block the current thread. Similarly basic algorithm for release is try release, if successful, unblock the first thread in the queue else simply return. The threads will wait in a first-in-first-out (FIFO) wait queues.  The abstract methods tryAcquire() and tryRelease() will be implemented by subclasses based on their need.</p>
+</blockquote>
+<p>它提供了一个框架，用于实现阻塞锁和相关的同步器，如信号量，CountDownLatch等。获取的基本算法是try acquire，如果成功则返回其他排队线程，如果它尚未排队并阻止当前线程。同样，释放的基本算法是try release，如果成功，则取消阻塞队列中的第一个线程，否则只返回。线程在先进先出（FIFO）等待队列中等待。抽象方法tryAcquire()和tryRelease()将根据需要由子类实现。</p>
+<h3 id="以独占模式获取"><a href="#以独占模式获取" class="headerlink" title="以独占模式获取"></a>以独占模式获取</h3><blockquote>
+<p>Generic algorithm to acquire in exclusive mode</p>
+</blockquote>
+<p>以独占模式获取的通用算法<br><img src="/2018/12/30/20181230-aqs/AST_acquire.png" alt="AST_acquire"></p>
+<blockquote>
+<p>In the above diagram ‘shouldParkAfterFailedAcquire?’ verifies whether the predecessor’s wait status is SIGNAL. If yes, it knows for sure that the predecessor thread will SIGNAL on its release so it will immediately block else it may retry to acquire the lock in case it is the first node in queue.</p>
+</blockquote>
+<p>在上图中，“shouldParkAfterFailedAcquire？”验证前者的等待状态是否为SIGNAL。如果是，它确实知道前一个线程将在其释放时SIGNAL，因此它将立即阻止，否则它可能会重试获取锁，以防它是队列中的第一个节点。<br><img src="/2018/12/30/20181230-aqs/AST_acquired_queued.png" alt="AST_acquired_queued"></p>
+<h3 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h3><blockquote>
+<p>If a thread fails to acquire the lock, it will be put in a queue. If the queue doesn’t exist yet, it will initialize it using a dummy header and then link itself to it. The ‘next’ of the head and ‘prev’ of the node will be linked. The new node also becomes the tail. The wait status of the header node will be set to SIGNAL so that as the owner thread releases the lock, it can signal the head node’s successor to acquire the lock. One more time the thread will try to acquire the lock to make sure it cannot acquire before it actually parks.</p>
+</blockquote>
+<p>如果线程无法获取锁，它将被放入队列中。如果队列尚不存在，它将使用虚拟标头初始化它，然后将其自身链接到它。头部的“下一个”和节点的“上一个”将被链接。新节点也成了尾巴。标头节点的等待状态将设置为SIGNAL，以便当所有者线程释放锁时，它可以通知头节点的后继者获取锁。线程将再次尝试获取锁定以确保它在实际停放之前无法获取。<br><img src="/2018/12/30/20181230-aqs/FirstNodeWaitSignal.png" alt="FirstNodeWaitSignal"></p>
+<blockquote>
+<p>Thus the thread which failed to acquire the lock can be safely parked as long as its predecessor node’s waiting status is set to SIGNAL so it can retry to acquire the lock once the predecessor is released.<br>If the predecessor was cancelled, it will skip over all the canceled predecessors to reset its next and prev pointers to a waiting thread.</p>
+</blockquote>
+<p>因此，只要其前任节点的等待状态被设置为SIGNAL，就可以安全地停放未能获得锁的线程，因此一旦前一个被释放，它就可以重试获取锁。<br>如果前一个被取消，它将跳过所有被取消的前任，以重置其等待线程的next和prev指针。<br><img src="/2018/12/30/20181230-aqs/NodeWithSomeWaitStatus.png" alt="NodeWithSomeWaitStatus"></p>
+<h3 id="释放"><a href="#释放" class="headerlink" title="释放"></a>释放</h3><p><img src="/2018/12/30/20181230-aqs/AST_release.png" alt="AST_release"></p>
+<blockquote>
+<p>The sub classes will implement ‘try Release’ based on their requirement. Once released, the header node’s successor node needs to be signaled so that it can re-try to acquire. If there is no head, it means there are are no threads in queue so there is no one to be signaled. If the head exists, it makes sure wait status is not zero. If it is zero, it means the successor node need not be signaled.</p>
+</blockquote>
+<p>子类将根据他们的要求实现“try Release”。一旦发布，标头节点的后继节点需要发信号，以便它可以重新尝试获取。如果没有头，则表示队列中没有线程，因此没有人发出信号。如果磁头存在，则确保等待状态不为零。如果它为零，则意味着不需要发信号通知后继节点。</p>
+<h3 id="Unpark-successor-node’s-thread"><a href="#Unpark-successor-node’s-thread" class="headerlink" title="Unpark successor node’s thread"></a>Unpark successor node’s thread</h3><blockquote>
+<p>Thread to unpark is held in successor, which is normally just the next node.<br>Case 1: If head’s waiting status &lt; 0, clear the waiting status. If the successor node (P1) is not in canceled state, unpark the successor node’s thread so that it can retry to acquire.</p>
+</blockquote>
+<p>线程到unpark是在后继节点，通常只是下一个节点。<br>情况1：如果头部的等待状态&lt;0，则清除等待状态。如果后继节点（P1）未处于取消状态，则取消后继节点的线程，以便它可以重试获取。<br><img src="/2018/12/30/20181230-aqs/unparkSuccessor.png" alt="unparkSuccessor"></p>
+<blockquote>
+<p>Case 2: If successor node either cancelled or null, traverse backwards from tail to find the actual non-cancelled successor.</p>
+</blockquote>
+<p>情况2：如果后继节点取消或为null，则从尾部向后遍历以查找实际的未取消后继节点。<br><img src="/2018/12/30/20181230-aqs/unparkSuccessor1.png" alt="unparkSuccessor1"></p>
+<blockquote>
+<p>Once the unparked thread to acquire, its node becomes the new head. The old head will be delinked. If it fails to acquire, it will be re-parked. The head node’s wait status which was set to 0 will be reset to SIGNAL.</p>
+</blockquote>
+<p>一旦取消停放线程，其节点就成为新的头。老头节点将脱钩。如果未能获得，将重新停放。头节点的等待状态设置为0将重置为SIGNAL。</p>
+<h3 id="以共享模式释放"><a href="#以共享模式释放" class="headerlink" title="以共享模式释放"></a>以共享模式释放</h3><blockquote>
+<p>This is similar to exclusive release. It also ensures that a release propagates.</p>
+</blockquote>
+<p>这与独占释放类似。它还确保释放传播。</p>
+<h3 id="已共享模式获取"><a href="#已共享模式获取" class="headerlink" title="已共享模式获取"></a>已共享模式获取</h3><blockquote>
+<p>This is similar to exclusive acquire. It also propagates the release to other waiting threads in queue which are waiting to acquire the shared lock. Once a lock is released, it unparks its successor node which in turn propagates release to its next node.</p>
+</blockquote>
+<p>这类似于独占获取。它还将释放传播到队列中等待获取共享锁的其他等待线程。一旦锁定被释放，它就会取消其后继节点的停放，后者又将释放传播到下一个节点。</p>
+<h3 id="取消"><a href="#取消" class="headerlink" title="取消"></a>取消</h3><blockquote>
+<p>There may be a runtime exception while trying to acquire in which case the node in context will be canceled. If a node is canceled we must make sure that its successor node is properly linked to a valid predecessor node so the links may have to be adjusted. If its predecessor nodes are already in a canceled state, those nodes will be skipped to arrive to a proper predecessor node which has wait status &lt;= 0.<br>If the node to be canceled is tail node itself, it will simply be removed. Its predecessor node will become the new tail. The ‘next’ link of the new tail will point to null.<br>If the wait status is &lt; 0, it means the successor needs signal, try to set predecessor’s next-link so it will get one. If the predecessor is the head node itself then it will wake up its successor node.</p>
+</blockquote>
+<p>在尝试获取时可能存在运行时异常，在这种情况下将取消上下文中的节点。如果节点被取消，我们必须确保其后继节点正确链接到有效的前任节点，因此可能必须调整链接。如果其前任节点已经处于取消状态，则将跳过这些节点以到达具有等待状态&lt;= 0的正确的前任节点。<br>如果要取消的节点本身是尾节点，则只会删除它。它的前身节点将成为新的尾巴。新尾部的“下一个”链接将指向null。<br>如果等待状态&lt;0，则表示后继者需要信号，尝试设置前任的下一个链接，以便获得一个。如果前任是头节点本身，则它将唤醒其后继节点。</p>
+<blockquote>
+<p>Case 1: Node to be canceled is the tail node</p>
+</blockquote>
+<p>情况1：要取消的节点是尾节点<br><img src="/2018/12/30/20181230-aqs/AST_cancel.png" alt="AST_cancel"></p>
+<blockquote>
+<p>Case 2: The canceled node’s predecessor is head which now will signal the next node of the canceled node to wake up.</p>
+</blockquote>
+<p>情况2：取消节点的前任是head，现在将发信号通知被取消节点的下一个节点被唤醒。<br><img src="/2018/12/30/20181230-aqs/AST_cancel_unpark.png" alt="AST_cancel_unpark"></p>
+
+    </div>
+    
+        <div class="reward">
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="../img/reward-wepay.jpg"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">赞赏是不耍流氓的鼓励</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">无边华幕</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+        <a href="/2018/12/22/2018122201/" class="next-post btn btn-default" title="MySQL事务、隔离级别和锁">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">MySQL事务、隔离级别和锁</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+    
+    <div id="vcomments" class="valine"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/assets/valine.min.js"></script>
+
+    <script>
+        new Valine({
+            av: AV,
+            el: '#vcomments',
+            appId: 'xOKV9J4UeQAtVkvnJC7Kq2Jn-gzGzoHsz',
+            appKey: 'erIpQac4azoCmgfBB7Dl9maa',
+            placeholder: '说点什么吧',
+            notify: false,
+            verify: false,
+            avatar: 'mm',
+            meta: 'nick,mail'.split(','),
+            pageSize: '10',
+            path: window.location.pathname,
+            lang: 'null'.toLowerCase()
+        })
+    </script>
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">Table of Contents</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#AbstractQueuedSynchronizer类"><span class="toc-text">AbstractQueuedSynchronizer类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#以独占模式获取"><span class="toc-text">以独占模式获取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#队列"><span class="toc-text">队列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#释放"><span class="toc-text">释放</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Unpark-successor-node’s-thread"><span class="toc-text">Unpark successor node’s thread</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#以共享模式释放"><span class="toc-text">以共享模式释放</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#已共享模式获取"><span class="toc-text">已共享模式获取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#取消"><span class="toc-text">取消</span></a></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2017
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>
