@@ -1,0 +1,314 @@
+<!DOCTYPE HTML>
+<html lang="null">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="时光收藏">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="https://blog.hitime.wiki">
+    <!--SEO-->
+
+
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>配置中心Apollo-初探Apollo | 时光收藏</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="时光收藏" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header" style="background-image:url(http://snippet.shenliyang.com/img/banner.jpg)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="zhangdp">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://blog.hitime.wiki">时光收藏</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>Home</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/工具/"><i class="fa "></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="配置中心Apollo-初探Apollo">
+            
+	            配置中心Apollo-初探Apollo
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/ ">
+             
+        </a>
+    </span>
+    
+
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/apollo" title="apollo">
+                        apollo
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/01/05</span>
+        </span>
+        
+    
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h3 id="简介与简易安装"><a href="#简介与简易安装" class="headerlink" title="简介与简易安装"></a>简介与简易安装</h3><p>Apollo（阿波罗）是携程框架部门研发的分布式配置中心，能够集中化管理应用不同环境、不同集群的配置，配置修改后能够实时推送到应用端，并且具备规范的权限、流程治理等特性，适用于微服务配置管理场景。<br>服务端基于Spring Boot和Spring Cloud开发，打包后可以直接运行，不需要额外安装Tomcat等应用容器。<br>Java客户端不依赖任何框架，能够运行于所有Java运行时环境，同时对Spring/Spring Boot环境也有较好的支持。<br>.Net客户端不依赖任何框架，能够运行于所有.Net运行时环境。<br>通过<a href="https://github.com/ctripcorp/apollo/wiki/Quick-Start" target="_blank" rel="noopener">https://github.com/ctripcorp/apollo/wiki/Quick-Start</a> 可以进行快速安装开始了解Apollo<br>安装启动登录后进入主页面<br><img src="/2019/01/05/20190105-apollo-1/apollo_1.png" alt="主页面"></p>
+<h3 id="配置应用"><a href="#配置应用" class="headerlink" title="配置应用"></a>配置应用</h3><p>接下来新建SpringBoot项目进行Apollo配置管理测试<br>设置Apollo Meta Server地址来找到Apollo配置中心<br><img src="/2019/01/05/20190105-apollo-1/apollo_3.png" alt="设置Apollo Meta Server"><br>引入apollo-client<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile group: <span class="string">'com.ctrip.framework.apollo'</span>, name: <span class="string">'apollo-client'</span>, version: <span class="string">'1.2.0'</span></span><br></pre></td></tr></table></figure></p>
+<p>通过properties配置设置 <em>app.id</em> 来关联Apollo配置中心和应用程序，设置 <em>apollo.bootstrap.enabled</em> 来启用客户端中的apollo-client<br><img src="/2019/01/05/20190105-apollo-1/apollo_2.png" alt="设置apollo客户端"></p>
+<h3 id="使用配置信息"><a href="#使用配置信息" class="headerlink" title="使用配置信息"></a>使用配置信息</h3><p>将当前客户端的app.id的值在Apollo配置中心创建项目<br><img src="/2019/01/05/20190105-apollo-1/apollo_4.png" alt="创建项目"><br>新增配置 <em>spring.datasource.primary.jdbc-url</em> 并发布<br><img src="/2019/01/05/20190105-apollo-1/apollo_5.png" alt="设置apollo客户端"><br>在客户端通过接口获取键值以便观察配置值变化情况<br><img src="/2019/01/05/20190105-apollo-1/apollo_6.png" alt="设置apollo客户端"><br>启动测试程序通过 <em><a href="http://localhost:10008/getValue" target="_blank" rel="noopener">http://localhost:10008/getValue</a></em> 获取 <em>spring.datasource.primary.jdbc-url</em> 的值，可以看到已经通过拿到Apollo中最新的配置<br><img src="/2019/01/05/20190105-apollo-1/apollo_7.png" alt="设置apollo客户端"><br>再次在Apollo配置中心更新 <em>spring.datasource.primary.jdbc-url</em> 的值为test，不重启客户端刷新页面便看到键值已经更新<br><img src="/2019/01/05/20190105-apollo-1/apollo_8.png" alt="设置apollo客户端"><br>Apollo 对键值的获取有多种方式完全能满足日常使用，对原本配置文件配置方式转换到 Apollo 也做了考虑，可以在配置页面选择文本的方式将 properties 中的配置信息导入<br><img src="/2019/01/05/20190105-apollo-1/apollo_9.png" alt="设置apollo客户端"><br>如果希望把日志相关的配置也放到 Apollo 中管理则可以通过设置 <em>apollo.bootstrap.eagerLoad.enabled=true</em> 方式在日志系统加载之前加载配置信息<br>总体来说 Apollo 对日常的配置信息管理已经做的非常好，后续文章我们将了解一些 Apollo 在应对特殊配置上的使用</p>
+<blockquote>
+<p>Apollo Github主页：<a href="https://github.com/ctripcorp/apollo" target="_blank" rel="noopener">https://github.com/ctripcorp/apollo</a><br>Apollo客户端使用：<a href="https://github.com/ctripcorp/apollo/wiki/Java客户端使用指南" target="_blank" rel="noopener">https://github.com/ctripcorp/apollo/wiki/Java客户端使用指南</a></p>
+</blockquote>
+
+    </div>
+    
+        <div class="reward">
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="../img/reward-wepay.jpg"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">赞赏是不耍流氓的鼓励</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">无边华幕</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+        <a href="/2018/12/30/20181230-lock/" class="next-post btn btn-default" title="不可不说的Java“锁”事[转载]">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">不可不说的Java“锁”事[转载]</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+    
+    <div id="vcomments" class="valine"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/assets/valine.min.js"></script>
+
+    <script>
+        new Valine({
+            av: AV,
+            el: '#vcomments',
+            appId: 'xOKV9J4UeQAtVkvnJC7Kq2Jn-gzGzoHsz',
+            appKey: 'erIpQac4azoCmgfBB7Dl9maa',
+            placeholder: '说点什么吧',
+            notify: false,
+            verify: false,
+            avatar: 'mm',
+            meta: 'nick,mail'.split(','),
+            pageSize: '10',
+            path: window.location.pathname,
+            lang: 'null'.toLowerCase()
+        })
+    </script>
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">Table of Contents</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#简介与简易安装"><span class="toc-text">简介与简易安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置应用"><span class="toc-text">配置应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用配置信息"><span class="toc-text">使用配置信息</span></a></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2017
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>
