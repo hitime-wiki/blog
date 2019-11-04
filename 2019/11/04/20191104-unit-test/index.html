@@ -1,0 +1,417 @@
+<!DOCTYPE HTML>
+<html lang="null">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="时光收藏">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="https://blog.hitime.wiki">
+    <!--SEO-->
+
+
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>为什么要写单元测试 | 时光收藏</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="时光收藏" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header" style="background-image:url(http://snippet.shenliyang.com/img/banner.jpg)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="zhangdp">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://blog.hitime.wiki">时光收藏</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>Home</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/工具/"><i class="fa "></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="为什么要写单元测试">
+            
+	            为什么要写单元测试
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/ ">
+             
+        </a>
+    </span>
+    
+
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/单元测试" title="单元测试">
+                        单元测试
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/11/04</span>
+        </span>
+        
+    
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h2 id="测试分类"><a href="#测试分类" class="headerlink" title="测试分类"></a>测试分类</h2><p>RAD（Rap Application Development，快速应用开发）模型是软件开发过程中的一个重要模型，由于其模型构图形似字母V，所以又称软件测试的V模型，V模型大体可以划分为以下几个不同的阶段步骤：需求分析、概要设计、详细设计、软件编码、单元测试、集成测试、系统测试、验收测试。</p>
+<p><img src="/2019/11/04/20191104-unit-test/unit_test_1.png" alt="RAD"></p>
+<p>通常研发在完成开发编码后都会进行自测，自测所包含的测试类型应当为单元测试和集成测试（联调和功能测试）。联调和功能测试大部分开发能很好的完成，因为这一部分是能够根据产品需求看得见摸得着的。往往单元测试就很容易被忽略。</p>
+<h2 id="什么是单元测试"><a href="#什么是单元测试" class="headerlink" title="什么是单元测试"></a>什么是单元测试</h2><p>如果你听说过“测试驱动开发”（TDD：Test-Driven Development），单元测试就不陌生。<br>所谓测试驱动开发，是指先编写接口，紧接着编写测试。编写完测试后，我们才开始真正编写实现代码。在编写实现代码的过程中，一边写，一边测，什么时候测试全部通过了，那就表示编写的实现完成了：</p>
+<p><img src="/2019/11/04/20191104-unit-test/unit_test_2.png" alt="TDD"></p>
+<p>当然，这是一种理想情况。大部分情况是我们已经编写了实现代码，需要对已有的代码进行测试。<br>比如对函数abs()，我们可以编写出以下几个测试用例：</p>
+<blockquote>
+<ol>
+<li>输入正数，比如1、1.2、0.99，期待返回值与输入相同；</li>
+<li>输入负数，比如-1、-1.2、-0.99，期待返回值与输入相反；</li>
+<li>输入0，期待返回0；</li>
+<li>输入非数值类型，比如null，期待抛出类型错误异常。</li>
+</ol>
+</blockquote>
+<p>把上面的测试用例放到一个测试模块里，就是一个完整的单元测试。<br>如果单元测试通过，说明我们测试的这个函数能够正常工作。如果单元测试不通过，要么函数有bug，要么测试条件输入不正确，总之，需要修复使单元测试能够通过。<br>单元测试通过后有什么意义呢？如果我们对abs()函数代码做了修改，只需要再跑一遍单元测试，如果通过，说明我们的修改不会对abs()函数原有的行为造成影响，如果测试不通过，说明我们的修改与原有行为不一致，要么修改代码，要么修改测试。<br>单元测试是开发人员自我测试的存续，一次我在做开发月供计算的时候，突然测试告知当月利率为0时月供计算异常。我分析问题后对利率为0的计算月供和本金做总贷金额/总期数和利息返回0处理，因为我更改了计算类我如何判断是否对之前逻辑有没有影响呢。这个时候我只需要将之前对该计算类的单元测试过一遍就能基本排除对之前没有影响，如下图：</p>
+<p><img src="/2019/11/04/20191104-unit-test/unit_test_3.png" alt="Plan_test"></p>
+<p>开始编写单元测试就意味着你摆脱了祈祷式编程走上了一条代码可控的光明之路。</p>
+<h2 id="单元测试的特点"><a href="#单元测试的特点" class="headerlink" title="单元测试的特点"></a>单元测试的特点</h2><p>理想情况下，单元测试应该是相互独立、可自动化运行的。<br>正确的单元测试应当遵循以下特点：</p>
+<table>
+<thead>
+<tr>
+<th>资源</th>
+<th>单元测试</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>网络访问</td>
+<td>否</td>
+</tr>
+<tr>
+<td>数据库访问</td>
+<td>否</td>
+</tr>
+<tr>
+<td>访问文件</td>
+<td>否</td>
+</tr>
+<tr>
+<td>访问用户界面</td>
+<td>否</td>
+</tr>
+<tr>
+<td>使用外部服务</td>
+<td>否</td>
+</tr>
+<tr>
+<td>多线程</td>
+<td>否</td>
+</tr>
+<tr>
+<td>使用sleep语句</td>
+<td>否</td>
+</tr>
+<tr>
+<td>使用系统属性设置</td>
+<td>否</td>
+</tr>
+<tr>
+<td>运行时间限制（毫秒）</td>
+<td>60</td>
+</tr>
+<tr>
+<td>强制时间限制（分钟）</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<h2 id="如何做单元测试"><a href="#如何做单元测试" class="headerlink" title="如何做单元测试"></a>如何做单元测试</h2><p>说了这么多单元测试的优点，道理大家一定都懂，问题是如何做单元测试？</p>
+<h3 id="简单类测试-还不是手到擒来"><a href="#简单类测试-还不是手到擒来" class="headerlink" title="简单类测试-还不是手到擒来"></a>简单类测试-还不是手到擒来</h3><p>简单类测试可以通过new一个类的方式进行测试，这样就保证后期部署时单元测试可以开启验证代码快速的验证代码的正确性（使用Spring容器服务的话启动非常慢）。</p>
+<p><img src="/2019/11/04/20191104-unit-test/unit_test_4.png" alt="简单类测试"></p>
+<h3 id="嵌套类测试-你得听我的"><a href="#嵌套类测试-你得听我的" class="headerlink" title="嵌套类测试-你得听我的"></a>嵌套类测试-你得听我的</h3><p>在日常开发中不可能只有一个简单类，更多的是需要借助Spring容器注入其他类进行使用，这个时候我们可以使用Mockito进行服务的注入和模拟。<br>我们先看一个简单的例子：<br>NestedBusinessService：</p>
+<p><img src="/2019/11/04/20191104-unit-test/unit_test_5.png" alt="NestedBusinessService"></p>
+<p>NestedBusinessService下使用了OrderManager做数据获取，我们希望测试NestedBusinessService中process方法的相关逻辑，我们不想关心OrderManager是如何获取数据的（也就是不再下探OrderManager类），测试内容如下：</p>
+<p><img src="/2019/11/04/20191104-unit-test/unit_test_6.png" alt="NestedBusinessService"></p>
+<p>这个时候我们可以使用Mockito中的mock方法将OrderManager类直接模拟出来，当碰到OrderManager类的方法时会自动返回null。有同学一定会说，这不行啊，返回null我怎么往下测试啊！<br>实际上你完全可以告诉被Mockito模拟的类运行到某个方式时你期望它返回什么，要达到这个目的我们可以使用Mockito的when方法，告诉它你期望执行的方法以及返回值。如下图：<br>NestedBusinessServiceTests：</p>
+<p><img src="/2019/11/04/20191104-unit-test/unit_test_7.png" alt="NestedBusinessServiceTests"></p>
+<p>我们可以看到在类的最前面我们申明了orderManager的全局变量，在@Before注解的方法中我们使用Mockito的mock方法模拟了一个OrderManager对象并赋给了orderManager。<br>在测试代码中49行我们通过when(Mockito.when()的静态方法形式)告知了Mockito我们希望运行到orderManager对象中loadByOrderId方法时返回一个预先设置好的Order对象。<br>这样我们就能完成一个嵌套类的测试工作了。</p>
+<h3 id="多层嵌套类-我们该如何是好"><a href="#多层嵌套类-我们该如何是好" class="headerlink" title="多层嵌套类-我们该如何是好"></a>多层嵌套类-我们该如何是好</h3><p>刚讲了单层的嵌套类，如果碰到多层嵌套类，我们要同时测试Service层和Manager层该怎么办呢？是不是不做什么就能测试Manager层代码呢？上面我们讲了Mockito的mock方法会模拟一个对象，但是这个对象碰到方法的时候只会返回null，除非你告诉它返回什么，感觉傻傻的。我们现在介绍另外一个方法spy方法。spy方法也是模拟一个对象，但是这个对象是建立在真实类的基础上的，就好像Spring注入的类一样什么都能干。<br>如下图：<br>MultiLayerNestedBusinessServiceTests：</p>
+<p><img src="/2019/11/04/20191104-unit-test/unit_test_8.png" alt="MultiLayerNestedBusinessServiceTests"></p>
+<p>不是说什么都能干吗？怎么报错？是的，OrderManager类是一个真真实实的类，但是它毕竟没有将代码中所有的类都加载进来，这就导致OrderManager里的嵌套类自然就GG了。我们尝试将OrderMapper类也模拟出来，还是NullPorinter，如下图：</p>
+<p><img src="/2019/11/04/20191104-unit-test/unit_test_9.png" alt="MultiLayerNestedBusinessServiceTests"></p>
+<p>虽然我们将OrderMapper类也模拟出来了，但是orderManager对象已经是一个真实的对象了，在它初始化的时候已经加载了一个为null的OrderMapper对象，所以我们需要在orderManager对象初始化后注入一个已经模拟好的OrderMapper，如下图：</p>
+<p><img src="/2019/11/04/20191104-unit-test/unit_test_10.png" alt="MultiLayerNestedBusinessServiceTests"></p>
+<p>此时既然orderMapper也是模拟的也就需要告诉它什么方法应返回什么，如下图：</p>
+<p><img src="/2019/11/04/20191104-unit-test/unit_test_11.png" alt="MultiLayerNestedBusinessServiceTests"></p>
+<h3 id="静态类-没有最强只有更强"><a href="#静态类-没有最强只有更强" class="headerlink" title="静态类-没有最强只有更强"></a>静态类-没有最强只有更强</h3><p>日常代码中总会用到Util类，这些类的方法都是静态的，我们如何的完美的绕过它们呢？PowerMock是不二之选，如下图：<br>ImplLoadServiceTests：</p>
+<p><img src="/2019/11/04/20191104-unit-test/unit_test_12.png" alt="ImplLoadServiceTests"></p>
+<p>按照代码逻辑计算类型传相减的话得到的结果应该是-1，但是因为我们使用PowerMock替换了getBean的返回得到了相加的结果。<br>PowerMock可以实现完成对private//static//final方法的Mock，就不一一列举， 反正是没有最强只有更强。</p>
+<h3 id="入参校验-请再爱我一次"><a href="#入参校验-请再爱我一次" class="headerlink" title="入参校验-请再爱我一次"></a>入参校验-请再爱我一次</h3><p>看到标题可能会有同学说，入参有什么好校验的，入参都是我传入的啊？非也非也，当我们要请求外部接口的时候，入参肯定是要做相应适配，如何验证入参的正确性呢，请听我从头到来。<br>如下图：</p>
+<p><img src="/2019/11/04/20191104-unit-test/unit_test_13.png" alt="RpcBusinessService"></p>
+<p>RpcBusinessService通过FinFeignClient请求远程服务得到用户信息并进行包装，上面的类大概就写了这些。在请求前因为用户类型和远程服务不匹配做了一次转换，我们希望在请求前进行一次请求入参校验避免转换出错。具体代码如下：</p>
+<p><img src="/2019/11/04/20191104-unit-test/unit_test_14.png" alt="RpcBusinessServiceTests"></p>
+<p>此处通过verify方法使用ArgumentCaptor在请求前进行了入参的捕获，我们用断言判断入参是否是预期的就能够很好的检验入参的正确性了。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>至此单元测试相关内容就讲完了，至于如何实践还需要大家多在项目中摸索。单元测试看似是测试工作，但是对我们开发工作的延续，做的好的单元测试能够很有效的保障我们开发的功能是我们所预期的。希望大家能够重视单元测试避免祈祷式编程。</p>
+<p>常用组件：</p>
+<ol>
+<li>Mockito</li>
+<li>PowerMock</li>
+<li>hamcrest</li>
+</ol>
+<p>示例代码：</p>
+<ol>
+<li><a href="https://gitee.com/hitime-wiki/demo-test" target="_blank" rel="noopener">demo-test: 单元测试实例程序</a></li>
+</ol>
+<p>参考文档：</p>
+<blockquote>
+<p><a href="https://www.cnblogs.com/findyou/p/6480411.html" target="_blank" rel="noopener">软件测试概念及分类整理汇总 - Findyou - 博客园</a><br><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017604210683936" target="_blank" rel="noopener">单元测试 - 廖雪峰的官方网站</a></p>
+</blockquote>
+<p>#博客</p>
+
+    </div>
+    
+        <div class="reward">
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="../img/reward-wepay.jpg"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">赞赏是不耍流氓的鼓励</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">无边华幕</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+        <a href="/2019/08/20/20190820-encode/" class="next-post btn btn-default" title="什么是编码">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">什么是编码</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+    
+    <div id="vcomments" class="valine"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/assets/valine.min.js"></script>
+
+    <script>
+        new Valine({
+            av: AV,
+            el: '#vcomments',
+            appId: 'xOKV9J4UeQAtVkvnJC7Kq2Jn-gzGzoHsz',
+            appKey: 'erIpQac4azoCmgfBB7Dl9maa',
+            placeholder: '说点什么吧',
+            notify: false,
+            verify: false,
+            avatar: 'mm',
+            meta: 'nick,mail'.split(','),
+            pageSize: '10',
+            path: window.location.pathname,
+            lang: 'null'.toLowerCase()
+        })
+    </script>
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">Table of Contents</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#测试分类"><span class="toc-text">测试分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是单元测试"><span class="toc-text">什么是单元测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#单元测试的特点"><span class="toc-text">单元测试的特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何做单元测试"><span class="toc-text">如何做单元测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#简单类测试-还不是手到擒来"><span class="toc-text">简单类测试-还不是手到擒来</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#嵌套类测试-你得听我的"><span class="toc-text">嵌套类测试-你得听我的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多层嵌套类-我们该如何是好"><span class="toc-text">多层嵌套类-我们该如何是好</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#静态类-没有最强只有更强"><span class="toc-text">静态类-没有最强只有更强</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#入参校验-请再爱我一次"><span class="toc-text">入参校验-请再爱我一次</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2017
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>
